@@ -1,2 +1,2 @@
-# GTU-HomeWork
+# GTU-Homework
  Gebze Technical University Assignments
