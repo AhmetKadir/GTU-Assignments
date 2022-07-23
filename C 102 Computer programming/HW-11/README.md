@@ -6,7 +6,8 @@
 
 **Collaboration Policy**: No collaboration is permitted.  
 
-**Grading**: This homework will be graded on a scale of 100.  ![](ScreenShots/01.png)
+**Grading**: This homework will be graded on a scale of 100.  
+![](ScreenShots/01.png)
 
 Write a complete program achieving all the tasks below. 
 
