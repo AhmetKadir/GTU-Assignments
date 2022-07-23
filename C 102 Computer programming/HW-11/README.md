@@ -13,7 +13,7 @@ Write a complete program achieving all the tasks below.
 - The program takes a single argument as the name of the file to be read. A sample file is attached (Movies.txt). The program reads this file which has labeled columns separated by commas. Every row of this text file includes information about a movie. You are asked to read every row as a string and decompose the given information (separated by commas).  
 - The following shows a few entries of this file in table format. 
 
-![](Aspose.Words.00eb1ba5-e7a8-480e-9b95-e2ba844f2759.002.png)
+![](ScreenShots/Aspose.Words.00eb1ba5-e7a8-480e-9b95-e2ba844f2759.002.png)
 
 **Figure.1 Movie List Example** 
 
