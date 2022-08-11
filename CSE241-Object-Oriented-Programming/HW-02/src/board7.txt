@@ -1,0 +1,12 @@
+-----P-----
+---PPPPPP--
+---PPP.PP--
+PPPPPPPPPPP
+PPPPPPPPPPP
+---PPPPPP--
+---PPPPPP--
+-----P-----
+end
+Human
+0
+type1

@@ -1,0 +1,10 @@
+-----P-----
+---PPPPPP--
+---PPP.PP--
+PPPPPPPPPPP
+PPPPPPPPPPP
+---PPPPPP--
+---PPPPPP--
+-----P-----
+end
+Human

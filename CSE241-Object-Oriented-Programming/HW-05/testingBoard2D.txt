@@ -1,0 +1,23 @@
+[2J[0;0H
+  a b c d e f g h i 
+1       P P P       
+2       P P P       
+3       P P P       
+4 P P P P P P P P P 
+5 P P P P . P P P P 
+6 P P P P P P P P P 
+7       P P P       
+8       P P P       
+9       P P P       
+
+[2J[0;0H
+  a b c d e f g h i 
+1       P P P       
+2       P P P       
+3       P . P       
+4 P P P P . P P P P 
+5 P P P P P P P P P 
+6 P P P P P P P P P 
+7       P P P       
+8       P P P       
+9       P P P       
