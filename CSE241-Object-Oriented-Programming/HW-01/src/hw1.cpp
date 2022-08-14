@@ -5,14 +5,18 @@
 #include <ctime>
 #include <chrono>
 #include <thread>
-#include "AhmetkadirAksu.h"
+#include "hw1.h"
 
 using namespace std;
 
 int main(){
     int run = 1, boardType, humanGame;
     while (run !=0 ){       /*Runs until finish one game.*/
-        cout << "Choose the board type(from 1 to 6): ";
+        cout << "\n---------------------------------------------";
+        cout << "\n\t\tPEG SOLITAIRE";
+        cout << "\n---------------------------------------------";
+
+        cout << "\n\nChoose the board type(from 1 to 6): ";
         cin >> boardType;
         if (boardType < 1 || boardType > 6) {
             run = 1;
@@ -86,7 +90,7 @@ void printmap(vector<vector<cell>> maps){   /*Function to print boards*/
         counter++;
         if (i==0 && control == 1) {
             cout << "  ";
-            for(int k=0 ; k< static_cast<int>(maps[i].size()); k++) cout << label[k];    /*Prints letters in the map.*/
+            for(int k=0 ; k< static_cast<int>(maps[i].size()); k++) cout << label[k] << " ";    /*Prints letters in the map.*/
             control = 0;
             i--;
         }
@@ -94,15 +98,16 @@ void printmap(vector<vector<cell>> maps){   /*Function to print boards*/
             for(int j=0; j < static_cast<int>(maps[i].size()); j++){    /*Prints pegs and empty areas, and prints out of the board*/
                 switch(maps[i][j]){
                     case (out):
-                        cout << ' ' ; 
+                        cout << " " ; 
                         break;
                     case (peg):
-                        cout << 'P';
+                        cout << "P";
                         break;
                     case(empty):
-                        cout << '.';
+                        cout << ".";
                         break;
                 }
+                cout << " ";
                 
             }
         }
@@ -111,6 +116,7 @@ void printmap(vector<vector<cell>> maps){   /*Function to print boards*/
     }
     
 }
+
 vector<vector<cell>> map1(){            
     vector<vector<cell>> mymap1{
         {out, out, peg, peg, peg, out, out},
@@ -194,17 +200,16 @@ vector<vector<cell>> map6(){
 
 void move(vector<vector<cell>> board){      /*Function to play human game*/
     string userMove;
-    int row, column, running = 1, score;
+    int row, column, score;
     char direction;
+    bool run = true;
     printmap(board);
-    while(running == 1){
-        cout << "Please enter your move: ";         /*Takes a string from user*/
+    while(run){
+        printInputMessage();
         cin >> userMove;
-        column = userMove[0] - 65;                  /*Takes the char and turns into a integer to fit in the map*/
-        row = userMove[1] - '1';                    
-        direction = userMove[3];
-        if (checkInput(userMove) == false) cout << "Invalid Input!" << endl;
-        else if(checkMove(row, column, direction, board) == false) cout << "Invalid Move!" << endl;
+        processInput(userMove, &column, &row, &direction);
+        if (checkInput(userMove) == false) cout << "\nInvalid Input!\n" << endl;
+        else if(checkMove(row, column, direction, board) == false) cout << "\nInvalid Move!\n" << endl;
         else{    
             board [row][column] = empty;
             switch(direction){                      /*Movement according to direction.*/
@@ -232,29 +237,26 @@ void move(vector<vector<cell>> board){      /*Function to play human game*/
             printmap(board);
             cout << endl;
             if(endGame(board) == true){                              /*Finish game*/          
-                cout << "The game is over!" << endl;                
                 score = finalScore(board);
-                cout << "Your final score is "<< score << endl;
-                if (score == 1) cout << "1 is the best score ! " << endl << "Congratulations";
-                running = 0;                                        /*Ends loop*/
+                printFinalMessage(score);
+                run = false;                                        /*Ends loop*/
             }
         }
     }
 }
 
-void move6 (vector<vector<cell>> board){        /*Function to play human game*/ /*It does not work properly*/
+void move6 (vector<vector<cell>> board){        /*Function to play human game*/ 
     string userMove;                            /*Only for map 6*/
-    int row, column, running = 1, score;
+    int row, column, score;
     char direction;
+    bool run = true;
     printmap(board);
-    while(running == 1){
-        cout << "Please enter your move: ";        /*Takes a string from user*/
+    while(run){
+        printInputMessage();        /*Takes a string from user*/
         cin >> userMove;
-        column = userMove[0] - 65;                  /*Takes the char and turns into a integer to fit in the map*/
-        row = userMove[1] - '1';
-        direction = userMove[3];
-        if (checkInput(userMove) == false) cout << "Invalid Input!" << endl;
-        else if(checkMove6(row, column, direction, board) == false) cout << "Invalid Move!" << endl;
+        processInput(userMove, &column, &row, &direction);
+        if (checkInput(userMove) == false) cout << "\nInvalid Input!\n" << endl;
+        else if(checkMove6(row, column, direction, board) == false) cout << "\nInvalid Move!\n" << endl;
         else{    
             board [row][column] = empty;
             switch(direction){                                  /*Movement according to direction.*/
@@ -291,20 +293,13 @@ void move6 (vector<vector<cell>> board){        /*Function to play human game*/ 
                     cout << "Wrong entry !" << endl;
                     break;    
             }
-            cout << "HERE WORKS1" ;
             printmap(board);
             cout << endl;
-            cout << "HERE WORKS2" ;
             cout << endl;
-            cout << "HERE WORKS3" ;
             if(endGame6(board) == true){
-                cout << "The game is over!" << endl;
                 score = finalScore(board);
-                cout << "Your final score is "<< score << endl;
-                if (score == 1) cout << "1 is the best score ! " << endl << "Congratulations";
-
-                
-                running = 0;
+                printFinalMessage(score);
+                run = false;
             }
         }
     }
@@ -352,7 +347,7 @@ bool checkMove(int cRow, int cColumn, char cDirection, vector<vector<cell>> cBoa
     return true;
 }
 
-bool checkMove6(int cRow, int cColumn, char cDirection, vector<vector<cell>> cBoard){       /*Checks move if it is invalid or not.*//*It does not work properly*/
+bool checkMove6(int cRow, int cColumn, char cDirection, vector<vector<cell>> cBoard){       /*Checks move if it is invalid or not.*/
     if (cRow > static_cast<int>(cBoard.size())-1 || cRow < 0) return false;                 /*Works only for map 6*/
     if (cColumn > static_cast<int>(cBoard[0].size()) - 1 || cColumn < 0) return false;
     if (cBoard [cRow][cColumn] != peg) return false;
@@ -375,13 +370,9 @@ bool checkMove6(int cRow, int cColumn, char cDirection, vector<vector<cell>> cBo
             if ((cBoard[cRow - 1][cColumn+1] != peg || cBoard[cRow - 2][cColumn+2] != empty) && (cBoard[cRow - 1][cColumn-1] != peg || cBoard[cRow - 2][cColumn-2] != empty)) return false;
             break;
         case 'D':
-        /*cout << "works HERE Comp1" << endl;*/
             if (cRow + 2 >= static_cast<int>(cBoard.size())) return false;
-            /*cout << "works HERE Comp2" << endl;*/
             if (cColumn + 2 >= static_cast<int>(cBoard[0].size()) && cColumn - 2 < 0) return false;
-            /*cout << "works HERE Comp3" << endl;*/
             if ((cBoard[cRow + 1][cColumn+1] != peg || cBoard[cRow + 2][cColumn+2] != empty) && (cBoard[cRow + 1][cColumn-1] != peg || cBoard[cRow + 2][cColumn-2] != empty)) return false;
-            /*cout << "works HERE Comp4" << endl;*/
             break;
     }
     return true;
@@ -401,17 +392,13 @@ bool endGame(vector<vector<cell>> eBoard){                      /*Function to ch
     return true;
 }
 
-bool endGame6(vector<vector<cell>> eBoard){                     /*Function to check if the game is over or not*/ /*It does not work properly*/
+bool endGame6(vector<vector<cell>> eBoard){                     /*Function to check if the game is over or not*/
     int a = 0, b = 0;
     for(int i=0 ; i<static_cast<int>(eBoard.size()); i++){      /*Works only for map 6*/
-        /*cout << "prob a  ";*/
         for(int j=0 ; j<static_cast<int>(eBoard[i].size()); j++){
-            /*cout << "prob b  ";*/
             if(eBoard[i][j] == peg){
                 if(j < static_cast<int>(eBoard[i].size()) -4  && eBoard[i][j+2] == peg && eBoard[i][j+4]== empty) return false;
-                /*cout << "prob1  " << i << j; */
                 if(j > 3 && eBoard[i][j-2] == peg && eBoard[i][j-4] == empty) return false;
-                /*cout << "prob2  " << i << j;*/
                 if(i < (static_cast<int>(eBoard.size())-2) 
                     && j+2 < static_cast<int>(eBoard[i].size())  
                     && eBoard[i+1][j+1] == peg
@@ -421,7 +408,6 @@ bool endGame6(vector<vector<cell>> eBoard){                     /*Function to ch
                     && eBoard[i+1][j-1] == peg
                     && eBoard[i+2][j-2] == empty) b = 1;
                 if (a == 1 || b == 1) return false;
-                /*cout << "prob3  " << i << j;*/
                 if(i-2 > 0 
                     && j+2 < static_cast<int>(eBoard[i].size())  
                     && eBoard[i-1][j+1] == peg
@@ -431,7 +417,6 @@ bool endGame6(vector<vector<cell>> eBoard){                     /*Function to ch
                     && eBoard[i-1][j-1] == peg
                     && eBoard[i-2][j-2] == empty) b = 1;
                 if (a == 1 || b == 1) return false;
-                /*cout << "prob4  " << i << j;*/
             }
         }
     }
@@ -439,28 +424,13 @@ bool endGame6(vector<vector<cell>> eBoard){                     /*Function to ch
 }
 
 void computerGame(vector<vector<cell>> board){                      /*Function to make computer play the game*/
-    int row, column, running = 1,rDirec, score;
+    int row, column, score;
+    bool run = true;
     char direction;
     srand(time(NULL));                                              /*It changes random values for every run*/
     printmap(board);
-    while(running == 1){
-        row = rand() % static_cast<int>(board.size());                      /*Gets random values*/
-        column = rand() % static_cast<int>(board[0].size());
-        rDirec = rand() % 4;
-        switch(rDirec){
-            case 0 :
-                direction = 'R';
-                break;
-            case 1 :
-                direction = 'L';
-                break;
-            case 2 :
-                direction = 'U';
-                break;
-            case 3 :
-                direction = 'D';
-                break;
-        }
+    while(run){
+        getRandomMove(&row, &column, &direction, board);
         if(checkMove(row, column, direction, board) == false) ;
         else{    
             board [row][column] = empty;
@@ -492,39 +462,22 @@ void computerGame(vector<vector<cell>> board){                      /*Function t
             cout << endl;
 
             if(endGame(board) == true){             /*Finish game*/
-                cout << "The game is over!" << endl;       
                 score = finalScore(board);
-                cout << "Your final score is "<< score << endl;
-                if (score == 1) cout << "1 is the best score ! " << endl << "Congratulations";
-                running = 0;                                /*Ends the loop*/
+                printFinalMessage(score);
+                run = false;                                /*Ends the loop*/
             }
         }
     }
 }
 
-void computerGame6(vector<vector<cell>> board){                 /*Computer game foR map6*/  /*It does not work properly*/
-    int row, column, running = 1,rDirec, score;
+void computerGame6(vector<vector<cell>> board){                 /*Computer game for map6*/  
+    int row, column, score;
     char direction;
+    bool run = true;
     srand(time(NULL));
     printmap(board);
-    while(running == 1){
-        row = rand() % static_cast<int>(board.size());
-        column = rand() % static_cast<int>(board[0].size());
-        rDirec = rand() % 4;
-        switch(rDirec){
-            case 0 :
-                direction = 'R';
-                break;
-            case 1 :
-                direction = 'L';
-                break;
-            case 2 :
-                direction = 'U';
-                break;
-            case 3 :
-                direction = 'D';
-                break;
-        }
+    while(run){
+        getRandomMove(&row, &column, &direction, board);
         if(checkMove6(row, column, direction, board) == false) ;
         else{    
             board [row][column] = empty;
@@ -556,15 +509,57 @@ void computerGame6(vector<vector<cell>> board){                 /*Computer game 
             cout << endl;
 
             if(endGame6(board) == true){
-                cout << "The game is over!" << endl;         /*edit here*/
                 score = finalScore(board);
-                cout << "Your final score is "<< score << endl;
-                if (score == 1) cout << "1 is the best score ! " << endl << "Congratulations";
-                running = 0;
+                printFinalMessage(score);
+                run = false;
             }
         }
     }
 }
+
+void getRandomMove(int *row, int *col, char *direc, vector<vector<cell>> board){
+    *row = rand() % static_cast<int>(board.size());
+    *col = rand() % static_cast<int>(board[0].size());
+    int rDirec = rand() % 4;
+    switch(rDirec){
+        case 0 :
+            *direc = 'R';
+            break;
+        case 1 :
+            *direc = 'L';
+            break;
+        case 2 :
+            *direc = 'U';
+            break;
+        case 3 :
+            *direc = 'D';
+            break;
+    }
+}
+
+void processInput(string userMove,int *col, int *r, char* dir){
+        *col = userMove[0] - 65;                  /*Takes the char and turns into a integer to fit in the map*/
+        *r = userMove[1] - '1';                    
+        *dir = userMove[3];
+}
+
+void printInputMessage(){
+    cout << "\nPlease enter your move" << endl;         /*Takes a string from user*/
+    cout << "---Correct input type: B4-R---\n";
+    cout << "---Upper letters only---\n";
+    cout << "---This moves the peg at B4 towards right to eliminate the peg at C4---\n";
+    cout << "---Use L for left, R for right, U for up, and D for down.---\n"; 
+    cout << "Your move: "; 
+}
+
+void printFinalMessage(int score){
+    cout << "The game is over!" << endl;       
+    cout << "\n****************************************";
+    cout << "\n\tYour final score is "<< score << endl;
+    cout << "****************************************\n";
+    if (score == 1) cout << "1 is the best score ! " << endl << "Congratulations";
+}
+
 
 int finalScore(vector<vector<cell>> fBoard){                    /*Function to calculate final score*/
     int final = 0;                                              /*Calculates pegs in the board*/
