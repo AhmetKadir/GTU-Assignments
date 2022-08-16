@@ -112,7 +112,6 @@ int DayofYearSet::size() const{
 ostream& operator <<(ostream& outs,
 					const DayofYearSet& date)
 {
-	outs << endl;
 	if (date.size() == 0) outs << "This set is empty" << endl;
 	else
 		for(int i =0 ;i < date.size(); i++){

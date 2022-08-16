@@ -10,7 +10,8 @@ class PegSolitaire
 {
 public: 
     class Cell
-    {public:
+    {
+    public:
         Cell (int rowValue, int columnValue, cell situationValue);
         void setCell(cell currentSituation);
         bool cellEqual(cell compareSituation) const{ 
@@ -24,6 +25,7 @@ public:
         int column;
         cell situation;
     };
+
     PegSolitaire (int boardTypeVal, int humanGameVal);
     PegSolitaire (int boardTypeVal);
     PegSolitaire ();
@@ -47,8 +49,6 @@ public:
     static int totalNumberOfPegs();
     static int totalNumberOfPegsDecrease();
     bool compare(PegSolitaire& other);
-    bool gameHasStarted(const PegSolitaire& object1,
-                        const PegSolitaire& object2);
     bool gameHasStarted();
     void printComputerMove(int row, int column, char direction);
     void menu();
@@ -59,7 +59,9 @@ public:
     vector<vector<cell>> map4();
     vector<vector<cell>> map5();
     int finalScore();
+    void printFinalMessage(int score);
     static int pegsInBoards;
+
 private: 
     vector<vector<Cell>> board;
     int boardType;

@@ -6,78 +6,84 @@
 #include <chrono>
 #include <thread>
 #include <fstream>
-#include "AhmetkadirAksu.h"
+#include "hw2.h"
 
 using namespace std;
 
 int main(){
-    int run = 1, humanGame = 1;
-    string boardType, fileName, line;
-    fstream fBoard;
-    while (run != 0 ){                                                  /*Runs until finish the game.*/
-        cout << "Choose the board type(from 1 to 6): ";                 /*Gets boardtype from user*/
+    int humanGame = 1;
+    bool run = true;
+    string boardType, fileName;
+    int board;
+    while (run){                                                  /*Runs until finish the game.*/
+        cout << "\nChoose the board type(from 1 to 6)";                 /*Gets boardtype from user*/
+        cout << "\nIf you want to Load a board from files, just write #LOAD FILENAME.TXT#\n";
+        cout << "\nTo save the file while playing, write #SAVE filename.txt#";
+        cout << "\nYour input: ";
         cin >> boardType;
         if (boardType.compare("LOAD") == 0){                            /*LOAD Command*/
             cin >> fileName;
             loadBoard(fileName, humanGame);
             exit(0);
         }
-        else if (static_cast<int>(boardType[0]) < 49 || static_cast<int>(boardType[0]) > 54 || static_cast<int>(boardType.size()) > 1)
+
+        board = boardType[0] - '0';
+        if (board <= 0 || board > 6 || (boardType.size()) > 1)
             cerr << "Please enter a number between 1-6 !" << endl;    
         else{
+            cout << "boardType is " << boardType << "\n";
             cout << "Human game (1) or Computer game (0): " ;
             cin  >> humanGame;
             if (humanGame != 0 && humanGame != 1) {
-                run = 1;
+                run = true;
                 cerr << "Please enter 1 or 0 !! " << endl;
             }
             if (humanGame == 1){
-                switch(static_cast<int>(boardType[0])){
-                    case 49:
+                switch(board){
+                    case 1:
                         move(map1());
                         break;
-                    case 50:
+                    case 2:
                         move(map2());
                         break;
-                    case 51:
+                    case 3:
                         move(map3());
                         break;
-                    case 52:
+                    case 4:
                         move(map4());
                         break;
-                    case 53:
+                    case 5:
                         move(map5());
                         break;
-                    case 54:
+                    case 6:
                         move6(map6());
                         break;
                 }
-                run = 0;
+                run = false;
             }
             else{ 
-                switch(static_cast<int>(boardType[0])){
-                    case 49:
+                switch(board){
+                    case 1:
                         computerGame(map1());
                         break;
-                    case 50:
+                    case 2:
                         computerGame(map2());
                         break;
-                    case 51:
+                    case 3:
                         computerGame(map3());
                         break;
-                    case 52:
+                    case 4:
                         computerGame(map4());
                         break;
-                    case 53:
+                    case 5:
                         computerGame(map5());
                         break;
-                    case 54:
+                    case 6:
                         computerGame6(map6());
                         break;
                 }
-                run = 0;
+                run = false;
             }
-            
         }
     }
     return 0;
@@ -206,10 +212,8 @@ void move(vector<vector<cell>> board, int numberOfMoves /*= 0*/){           /*Fu
     printmap(board);
     while(running == 1){
         if(endGame(board) == true){                              /*Checks if the game is over*/          
-            cout << "The game is over!" << endl;                
             score = finalScore(board);
-            cout << "Your final score is "<< score << endl;
-            if (score == 1) cout << "1 is the best score ! " << endl << "Congratulations";
+            printFinalMessage(score);
             running = 0;          
             exit(0);                                                    /*Terminates the program*/
         }
@@ -268,10 +272,8 @@ void move6 (vector<vector<cell>> board, int numberOfMoves /* = 0*/){        /*Fu
     printmap(board);
     while(running == 1){
         if(endGame6(board) == true){                                            /*Checks if the game is over or not.*/
-            cout << "The game is over!" << endl;
             score = finalScore(board);
-            cout << "Your final score is "<< score << endl;
-            if (score == 1) cout << "1 is the best score ! " << endl << "Congratulations";
+            printFinalMessage(score);
             running = 0;
             exit(0);                                                            /*Terminates the program*/
         }
@@ -465,10 +467,8 @@ void computerGame(vector<vector<cell>> board, int numberOfMoves /*= 0*/){       
     printmap(board);
     while(running == 1){
         if(endGame(board) == true){                                             /*Checks if the game is over or not*/
-            cout << "The game is over!" << endl;       
             score = finalScore(board);
-            cout << "Your final score is "<< score << endl << endl;
-            if (score == 1) cout << "1 is the best score ! " << endl << "Congratulations" << endl;
+            printFinalMessage(score);
             running = 0;
             cout << "You can save the game or end the game" << endl << "USE SAVE COMMAND OR TYPE SOMETHING TO EXIT" << endl;
             cin >> answer;
@@ -540,11 +540,8 @@ void computerGame6(vector<vector<cell>> board,  int numberOfMoves /*=0*/){      
     printmap(board);
     while(running == 1){
         if(endGame6(board) == true){
-            cout << "The game is over!" << endl;         
             score = finalScore(board);
-            cout << "Your final score is "<< score << endl << endl;
-            if (score == 1) cout << "1 is the best score ! " << endl << "Congratulations" << endl;
-            running = 0;
+            printFinalMessage(score);
             cout << "You can save the game or end the game" << endl << "USE SAVE COMMAND OR TYPE SOMETHING TO EXIT" << endl;
             cin >> answer;
             if (answer.compare("SAVE") == 0){
@@ -616,6 +613,15 @@ int finalScore(vector<vector<cell>> fBoard){                    /*Function to ca
     return final;
 }
 
+
+void printFinalMessage(int score){
+    cout << "The game is over!" << endl;       
+    cout << "\n****************************************";
+    cout << "\n\tYour final score is "<< score << endl;
+    cout << "****************************************\n";
+    if (score == 1) cout << "1 is the best score ! " << endl << "Congratulations";
+}
+
 void printComputerMove(int row, int column, char direction){        /*It prints computer`s moves*/
     char c = column+65;
     int r = row+1;
@@ -633,6 +639,7 @@ void loadBoard(string fileName, int& humanGame){
             cin >> fileName;
         }
         cout << "File " << fileName << " is opening" << endl;
+        fileName = "boardTxts/" + fileName;
         myFile.open(fileName);
         if(myFile.is_open()){
             while(getline(myFile, line)){
@@ -692,6 +699,7 @@ void loadBoard(string fileName, int& humanGame){
 void saveBoard(string fileName, vector<vector<cell>> board, const int& humanGame, const int& numberOfMoves, const int type6){
     /*Function to save a board into a txt file*/
     ofstream myFile;
+    fileName = "boardTxts/" + fileName;
     myFile.open(fileName);
     if(myFile.is_open()){
         for(auto i=0; i<static_cast<int>(board.size()); i++){
@@ -719,5 +727,8 @@ void saveBoard(string fileName, vector<vector<cell>> board, const int& humanGame
 
         myFile.close();
         cout << endl << "Saved succesfully" << endl;
+    }
+    else {
+        cerr << "\nCould not open the file !\n" ;
     }
 }

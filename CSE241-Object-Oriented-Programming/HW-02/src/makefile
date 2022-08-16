@@ -1,9 +1,9 @@
 
 
-out:	AhmetkadirAksu.cpp AhmetkadirAksu.h
-		g++ -c AhmetkadirAksu.cpp -Wall -Wextra -std=c++11
-		g++ -o output AhmetkadirAksu.o -Wall -Wextra -std=c++11
+out:	hw2.cpp hw2.h
+		g++ -c hw2.cpp -Wall -Wextra -std=c++11
+		g++ -o out hw2.o -Wall -Wextra -std=c++11
 		
 
 clean:
-		rm output
+		rm out

@@ -98,15 +98,17 @@ void PegSolitaire::menu(){
                 newGameHuman();
                 break;
             case 3:
+                cout << "Please enter the board type(1 to 5): ";
+                cin >> boardType;
                 playGame();
                 break;
             case 4:
-                cout << "Enter the file name you want to load: " ;
+                cout << "Enter the file name you want to load(NO NEED TO ADD .TXT AT THE END): " ;
                 cin >> fileName;
                 loadBoard(fileName);
                 break;
             case 5:
-                cout << "Enter the file name you want to save: " ;
+                cout << "Enter the file name you want to save(NO NEED TO ADD .TXT AT THE END): " ;
                 cin >> fileName;
                 saveBoard(fileName);
                 break;
@@ -250,8 +252,6 @@ bool PegSolitaire::checkBoardType(int tboardType){
 
 void PegSolitaire::playGame(){
     int score;
-    cout << "Please enter the board type: ";
-    cin >> boardType;
     if (checkBoardType(boardType) == false) return;
     createMap();
     #ifdef DEBUG
@@ -275,7 +275,7 @@ void PegSolitaire::playGame(){
 void PegSolitaire::play(){
     /*Plays automatically*/
     int trow, tcolumn, running = 1,rDirec;
-    string answer, fileName;
+    string answer;
     char direction;
     int xsize = board.size();
     int ysize = board[0].size();
@@ -354,7 +354,7 @@ void PegSolitaire::continueLast(){
 
 void PegSolitaire::newGameHuman(){
     int xsize = board.size(), userContinue, tboardType;
-    cout << "Please enter the board type: ";
+    cout << "Please enter the board type(1 to 5): ";
     cin >> tboardType;
     if (checkBoardType(tboardType) == false) return;
     boardType = tboardType;
@@ -387,10 +387,8 @@ void PegSolitaire::play(int tboardType){
     #endif
     while(running == 1){
         if(endGame() == true){                              /*Checks if the game is over*/          
-            cout << "The game is over!" << endl;                
             score = finalScore();
-            cout << "Your final score is "<< score << endl;
-            if (score == 1) cout << "1 is the best score ! " << endl << "Congratulations";
+            printFinalMessage(score);
             running = 0;              
         }
         cout << "Please enter your move(Ex: B4-R)" << endl 
@@ -525,13 +523,13 @@ void PegSolitaire::askForSaving(){
     do{
         cout << "1- Save the game" << endl 
         << "2- Go back to the menu" << endl
-        << "Please enter your choice: ";
+        << "\nPlease enter your choice: ";
         cin >> answer;
         switch (answer){
             case 1:
-                cout << "Please enter the name of the file you want to save: ";
+                cout << "\nPlease enter the name of the file you want to save(NO NEED TO ADD .txt at the end): ";
                 cin >> fileName;
-                /*saveBoard(fileName, humanGame);*/
+                saveBoard(fileName);
                 control = 0;
                 break;
             case 2:
@@ -641,13 +639,6 @@ bool PegSolitaire::compare(PegSolitaire& other){
     return false;
 }
 
-bool PegSolitaire::gameHasStarted(const PegSolitaire& object1, const PegSolitaire& object2){
-    int xsize = object1.board.size();
-    int ksize = object2.board.size();
-    if (xsize > 0 && ksize > 0) return true;
-    return false;
-}
-
 bool PegSolitaire::gameHasStarted(){
     int xsize = board.size();
     if (xsize > 0) return true;
@@ -666,6 +657,9 @@ void PegSolitaire::loadBoard(string fileName){
             cin >> fileName;
         }
         cout << "File " << fileName << " is opening" << endl;
+        fileName =  "boards/" + fileName + ".txt";
+
+
         myFile.open(fileName);
         if(myFile.is_open()){
             board.clear();
@@ -728,7 +722,10 @@ void PegSolitaire::saveBoard(string fileName){
     if (gameHasStarted() == false) return;
     int xsize = board.size(), ysize = board[0].size();
     ofstream myFile;
+
+    fileName =  "boards/" + fileName + ".txt";
     myFile.open(fileName);
+
     if(myFile.is_open()){
         for(auto i=0; i< xsize; i++){
             for(decltype (i) j=0; j< ysize; j++){
@@ -769,4 +766,12 @@ int PegSolitaire::finalScore(){                    /*Function to calculate final
         }
     }
     return final;
+}
+
+void PegSolitaire::printFinalMessage(int score){
+    cout << "The game is over!" << endl;       
+    cout << "\n****************************************";
+    cout << "\n\tYour final score is "<< score << endl;
+    cout << "****************************************\n";
+    if (score == 1) cout << "1 is the best score ! " << endl << "Congratulations";
 }

@@ -31,6 +31,7 @@ bool endGame6(vector<vector<cell>> eBoard);
 void computerGame(vector<vector<cell>> board, int numberOfMoves=0);
 void computerGame6(vector<vector<cell>> board,  int numberOfMoves=0);
 int finalScore(vector<vector<cell>> fBoard);
+void printFinalMessage(int score);
 void printComputerMove(int row, int column, char direction);
 void loadBoard(string fileName, int& humanGame);
 void saveBoard(string fileName, vector<vector<cell>> board, 

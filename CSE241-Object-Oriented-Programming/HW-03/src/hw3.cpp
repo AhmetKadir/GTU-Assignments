@@ -36,7 +36,7 @@ int main(){
                     break;
             case 6:
                     cout << endl;
-                    if(p1.gameHasStarted(p1,p2) == true){
+                    if(p1.gameHasStarted() && p2.gameHasStarted()){
                         if (p1.compare(p2) == true)
                             cout << "1.game has more pegs on the board than  "
                             << " 2.game" << endl;
