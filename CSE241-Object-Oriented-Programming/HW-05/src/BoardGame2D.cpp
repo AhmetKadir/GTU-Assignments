@@ -14,6 +14,8 @@ namespace AkaGames{
 		string userMove;
 		int score;
 		print();
+		printMovementRules();
+
 		while(endGame() != true){
 			cout << endl << "Please enter the movement: ";
 			cin >> userMove;
@@ -27,15 +29,29 @@ namespace AkaGames{
 
 	void BoardGame2D::playAutoAll() {
 		int score;
+		int numberOfMoves = 0;
+		bool gameContinuesMessage = false;
+
 		print();
 		while(endGame() != true) {
-			playAuto();
-			/*this_thread::sleep_for(std::chrono::milliseconds(80));                    /*For delay */
-			//print();
+			if(playAuto()){
+				numberOfMoves ++;
+				this_thread::sleep_for(std::chrono::milliseconds(200));                    /*For delay */
+				if(numberOfMoves < 100) print();
+
+				if (numberOfMoves == 125)
+					gameContinuesMessage = true;
+					
+				if(gameContinuesMessage){
+					cout << "\n---The game is still going on, the results will be shared soon---\n";
+					gameContinuesMessage = false;
+				}
+			}
 		}
-		cout << "The game is over!" << endl;                
+		print();
+		cout << "\n\nThe game is over!" << endl;                
 		score = boardScore();
-		cout << "Your final score is "<< score << endl;
+		cout << "Your final score is "<< score << endl << endl;
 	} 
 	ostream& operator <<(ostream& outs,
 								const BoardGame2D& game)

@@ -21,7 +21,7 @@ public:
 
 	void playUser(string userMove);
 
-	void playAuto();
+	bool playAuto();
 
 	void swap(int& val1, int& val2);
 
@@ -36,6 +36,8 @@ public:
 	bool endGame() const;
 
 	int boardScore() const;
+
+	void printMovementRules() const;
 
 	vector<vector<int>> getBoard() const;
 private:

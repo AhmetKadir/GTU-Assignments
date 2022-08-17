@@ -39,7 +39,6 @@ namespace AkaGames{
         
 				for (int i =0 ; i<3; i++){
 				for (int j=0; j<3 ; j++){
-					/*cerr << "Initialize error4" << endl;*/
 					board[i][j] = defaultBoard[k];
 					if(board[i][j] == 0) {
 						zero_x = i;
@@ -78,7 +77,7 @@ namespace AkaGames{
         /*Correct input format : "0-1"*/
         int move_x, move_y, direction;
         if (checkInput(userMove) == false) {
-            cerr << "Invalid Input!" << endl;
+            cerr << "\n !!! Invalid Input !!!" << endl;
             cout << "You should enter the coordinates" << endl;
             cout << "Correct input format is a-b (a and b is an integer number between 0-2)" << endl;
             cout << "For example : (2-1)" << endl;
@@ -88,7 +87,7 @@ namespace AkaGames{
         move_y = userMove[2] - '0';
         direction = findDirection(move_x, move_y);
         if (direction == 4){
-            cerr << "Invalid Move" << endl;
+            cerr << "\n!!! Invalid Move !!!" << endl;
             return;
         }              
         cout << direction << endl;
@@ -151,7 +150,7 @@ namespace AkaGames{
 
     }
 
-    void EightPuzzle::playAuto(){
+    bool EightPuzzle::playAuto(){
         int move_x, move_y, direction, control =1;
         while(control == 1){
             move_x = rand() % 3;                      
@@ -160,10 +159,6 @@ namespace AkaGames{
             if ((move_x == zero_x && move_y == zero_y) || direction == 4) control = 1;
             else control = 0;
         }
-
-        cout << endl;
-        cout << "coordinates are :" << move_x << " " << move_y << endl;
-		cout << "direction value is " << direction << endl;
         switch(direction){
 			case 0: /*LEFT*/
 				if(move_y == 1){
@@ -218,11 +213,11 @@ namespace AkaGames{
 				cerr << "Something is wrong" << endl;
 				break;
 		}
-		print();
 		if(direction >= 0 && direction < 4){
             setZeroX(move_x);
 		    setZeroY(move_y);
         }
+		return true;
     }
     
     void EightPuzzle::swap(int& val1, int& val2){
@@ -256,8 +251,7 @@ namespace AkaGames{
 
 	void EightPuzzle::print() const{
         int counter = 0;
-    	cout << "\x1b[2J"; 
-    	cout << "\033[0;0H";
+
 		cout << endl;
         cout << "  \t0 1 2" << endl;
 		cout << "  \t_____" << endl << endl;
@@ -272,6 +266,12 @@ namespace AkaGames{
             cout << endl;    
         }
     }
+
+	void EightPuzzle::printMovementRules() const{
+		cout << "\nEnter the coordinates of the box which you want to empty." ;
+		cout << "\nCorrect input format is a-b (a and b is an integer number between 0-2)" << endl;
+        cout << "For example : (2-1)" << endl;
+	}
 
     bool EightPuzzle::endGame() const{
         int checkCell = 1;
@@ -294,5 +294,4 @@ namespace AkaGames{
         return board;
     }
     
-
 }

@@ -34,7 +34,7 @@ namespace AkaGames{
         
         void playUser(string userMove);
         
-        void playAuto();
+        bool playAuto();
 
         bool checkInput(string inp);
 
@@ -43,6 +43,8 @@ namespace AkaGames{
         void print() const;
 
         bool endGame() const;
+
+        void printMovementRules() const;
 
         int boardScore() const;
 

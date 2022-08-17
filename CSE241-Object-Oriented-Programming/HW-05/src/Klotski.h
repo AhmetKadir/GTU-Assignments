@@ -16,7 +16,7 @@ namespace AkaGames{
         
         void playUser(string userMove);
         
-        void playAuto();
+        bool playAuto();
 
         bool checkInput(string inp);
 
@@ -29,6 +29,8 @@ namespace AkaGames{
         bool endGame() const;
 
         int boardScore() const;
+
+        void printMovementRules() const;
 
         vector<vector<int>> getBoard() const;
     private:

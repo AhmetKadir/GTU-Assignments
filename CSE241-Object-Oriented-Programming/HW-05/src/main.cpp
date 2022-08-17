@@ -19,12 +19,14 @@ int main(){
 	PegSolitaire pegGame1,pegGame2;
 	EightPuzzle EPgame1, EPgame2;
 	Klotski KlotskiGame1, KlotskiGame2;
-	/*pegGame1.playUser();*/
-	/*pegGame1.playAutoAll();
-	EPgame1.playUser();
-	EPgame2.playAutoAll();*/
-	KlotskiGame1.playUser();
-	KlotskiGame2.playAutoAll();
+	
+	
+	// pegGame1.playUser();
+	// pegGame1.playAutoAll();
+	// EPgame1.playUser();
+	EPgame2.playAutoAll();
+	// KlotskiGame1.playUser();
+	// KlotskiGame2.playAutoAll();
 	
 	
 

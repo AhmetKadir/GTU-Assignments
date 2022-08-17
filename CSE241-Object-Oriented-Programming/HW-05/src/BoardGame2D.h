@@ -21,11 +21,13 @@ public:
 	
 	virtual void playUser () final;
 	
-	virtual void playAuto() = 0; /*Plays one move*/
+	virtual bool playAuto() = 0; /*Plays one move*/
 
 	virtual void playAutoAll() final; 
 
 	virtual void print() const = 0;
+
+	virtual void printMovementRules() const = 0;
 
 	friend ostream& operator <<(ostream& outs,
 								const BoardGame2D& game);

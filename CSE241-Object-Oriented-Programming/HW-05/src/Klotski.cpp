@@ -39,7 +39,7 @@ namespace AkaGames{
 	}
 
 	void Klotski::playUser(string userMove){
-		/*Correct input format theNumberYouWanttoMove-Direction
+		/*Correct inputformattheNumberYouWanttoMove-Direction
 		U-Up, D-Down, L-Left, R-Right 
 		For example: 5-D
 		Moves the block 5 to down if it is possible.*/
@@ -81,10 +81,10 @@ namespace AkaGames{
 							if(board[i+1][j] == 11)
 								swap(board[i][j], board[i+1][j]);
 		}
-		else cout << "INVALID MOVE !!" << endl;
+		else cout << "\nINVALID MOVE !!\n" << endl;
 	}  
         
-	void Klotski::playAuto(){
+	bool Klotski::playAuto(){
 		int blockNumber,i ,j;
 		char direction;
         
@@ -104,8 +104,8 @@ namespace AkaGames{
 				break;
 		}
 		if(checkMove(blockNumber, direction) == true){
-			cout << endl << "Direction is  "<< direction << endl;
-			cout << endl << "Block is  "<< blockNumber << endl;
+			// cout << endl << "Direction is  "<< direction << endl;
+			// cout << endl << "Block is  "<< blockNumber << endl;
 			if(direction == 'L')
 				for(i=0; i<5; i++)
 					for(j=0; j<4; j++)
@@ -133,8 +133,9 @@ namespace AkaGames{
 						if(board[i][j] == blockNumber)
 							if(board[i+1][j] == 11)
 								swap(board[i][j], board[i+1][j]);
-		print();
 		}
+		
+		return true;
 	}
 
 	bool Klotski::checkInput(string inp){
@@ -158,11 +159,9 @@ namespace AkaGames{
 					if(board[i][j] == blockNumber){
 						if(j == 0) return false;
 						if(board[i][j-1] != blockNumber && board[i][j-1] != 11) return false;
-						/*if(board[i][j-1] == 11)return true;*/
  					}
 				}
 			}
-			/*return false;*/
 		}
 		if (direction == 'R'){
 			for(i=4; i>=0; i--)
@@ -170,9 +169,7 @@ namespace AkaGames{
 					if(board[i][j] == blockNumber){
 						if(j >= 3) return false;
 						if(board[i][j+1] != blockNumber && board[i][j+1] != 11) return false;
-						/*if(board[i][j+1] == 11)return true;*/
  					}
-			/*return false;*/
 		}		
 		if (direction == 'U'){
 			for(int i=0; i<5; i++){
@@ -180,21 +177,18 @@ namespace AkaGames{
 					if(board[i][j] == blockNumber){
 						if(i == 0) return false;
 						if(board[i-1][j] != blockNumber && board[i-1][j] != 11) return false;
-						/*if(board[i-1][j] == 11)return true;*/
  					}
 				}
 			}
-			/*return false;*/
 		}
+
 		if (direction == 'D'){
 			for(i=4; i>=0; i--)
 				for(j=3; j>=0; j--)
 					if(board[i][j] == blockNumber){
 						if(i >= 4) return false;
 						if(board[i+1][j] != blockNumber && board[i+1][j] != 11) return false;
-						/*if(board[i+1][j] == 11)return true;*/
 					}
-			/*return false;*/
 		}
 		return true;
 	}
@@ -208,11 +202,9 @@ namespace AkaGames{
 
 	void Klotski::print() const{
 		int counter = 1;
-		cout << "\x1b[2J"; 
-    	cout << "\033[0;0H";
-		cout << endl;
+		cout << endl << endl;
         cout << "  \ta b c d" << endl;
-		cout << "  \t_______" << endl << endl;
+		cout << "  \t_______" << endl;
 		for (int i = 0; i<5 ; i++){
 			cout << counter << "| \t";
             counter++;
@@ -235,5 +227,12 @@ namespace AkaGames{
 		if(endGame() == true) return 0;
         else return 1;
 	}
+
+	void Klotski::printMovementRules() const{
+		cout << "\nCorrect input format is a-b (a is an integer number between 0-9, b is a letter to specify the direction.)" << endl;
+		cout << "L = left, R = right, U = up, D = down";
+        cout << "For example : (2-L)" << endl;
+	}
+
 
 }

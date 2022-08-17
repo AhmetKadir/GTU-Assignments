@@ -11,9 +11,6 @@ PegSolitaire::Cell::Cell(int rowValue, int columnValue, cell situationValue)
 {}
 
 void PegSolitaire::Cell::setCell(cell currentSituation){
-    #ifdef DEBUG
-    cerr << "Error in setcell" << endl;
-    #endif
     situation = currentSituation;
 }
 
@@ -23,9 +20,6 @@ bool PegSolitaire::Cell::cellEqual(cell compareSituation) const{
 }
 
 bool PegSolitaire::Cell::cellNotEqual(cell compareSituation) const{
-    /*#ifdef DEBUG
-    cerr << "Error in cellNotequal" << endl;
-    #endif*/
     if (situation != compareSituation) return true;
     return false;
 }
@@ -79,8 +73,8 @@ void PegSolitaire::playUser(string userMove){
         tcolumn = userMove[0] - 65;                                      /*Takes the char and turns into a integer to fit in the map*/
         trow = userMove[1] - '1';                    
         direction = userMove[3];
-        if (checkInput(userMove) == false) cerr << "Invalid Input!" << endl;                          
-        else if(checkMove(trow, tcolumn, direction) == false) cerr << "Invalid Move!" << endl;
+        if (checkInput(userMove) == false) cerr << "\n!!!!! Invalid Input !!!!!" << endl;                          
+        else if(checkMove(trow, tcolumn, direction) == false) cerr << "\n!!!!! Invalid Move !!!!!" << endl;
         else{    
             board [trow][tcolumn].setCell(empty);
             switch(direction){                                          /*Movement according to direction.*/
@@ -109,17 +103,19 @@ void PegSolitaire::playUser(string userMove){
     }
 }
 
-void PegSolitaire::playAuto(){
-    /*Plays automatically*/
-    int trow, tcolumn,rDirec;
+bool PegSolitaire::playAuto(){
+        /*Plays automatically*/
+    int trow, tcolumn, rDirec;
     string answer, fileName;
     char direction;
     int xsize = board.size();
     int ysize = board[0].size();
+
     if (xsize <= 0) {
         cerr << endl << "Something is wrong!" << endl;
-        return;
+        return false;
     }
+
     /*Generates random values and get a random move*/
     trow = rand() % xsize;                      
     tcolumn = rand() % ysize;
@@ -141,16 +137,12 @@ void PegSolitaire::playAuto(){
             cerr << "ERROR !" ;
             exit(1);
     }
+
     /*After generating a random move, it checks if the move is valid or not.
     If move is not valid, generates a new move and tries again
     If move is valid, then makes the move.*/
-    #ifdef DEBUG
-    cout << "Trying the move " << trow << tcolumn << direction << endl;
-    #endif
+
     if(checkMove(trow, tcolumn, direction) == true){           
-        #ifdef DEBUG
-        cout << "MOVE SUCCESFUL" << endl;
-        #endif
         board [trow][tcolumn].setCell(empty);
         switch(direction){
             case 'R':
@@ -174,9 +166,10 @@ void PegSolitaire::playAuto(){
                 exit(1);
                 break;    
             }
-        cout << endl;
-        print();
-        this_thread::sleep_for(std::chrono::milliseconds(80)); 
+        return true;
+    }
+    else{
+        return false;
     }
     
 }
@@ -194,41 +187,29 @@ bool PegSolitaire::checkInput(string inp){                                      
 bool PegSolitaire::checkMove(int cRow, int cColumn, char cDirection){        /*Checks move if it is invalid or not.*/
     int xsize = board.size();
     int ysize = board[0].size();
+
     if (cRow > xsize-1 || cRow < 0) return false;
     if (cColumn > ysize - 1 || cColumn < 0) return false;
-    #ifdef DEBUG
-    cerr << "Check Move 1" << endl;
-    #endif
+
     if (board [cRow][cColumn].cellNotEqual(peg)) return false;
-    switch (cDirection){                                                                    /*Checks if it is inside the borders*/
+    switch (cDirection){                                                       /*Checks if it is inside the borders*/
         case 'R':
-            #ifdef DEBUG
-            cerr << "Check Move 2" << endl;
-            #endif
             if (cColumn + 2 > (ysize - 1)) return false;
             if (board[cRow][cColumn + 1].cellNotEqual(peg)) return false;
             if (board[cRow][cColumn + 2].cellNotEqual(empty)) return false;
             break;
         case 'L':
-            #ifdef DEBUG
-            cerr << "Check Move 3" << endl;
-            #endif
             if (cColumn -2 < 0) return false;
             if (board[cRow][cColumn - 1].cellNotEqual(peg)) return false;
             if (board[cRow][cColumn - 2].cellNotEqual(empty)) return false;
             break;
         case 'U':
-            #ifdef DEBUG
-            cerr << "Check Move 4" << endl;
-            #endif
             if (cRow -2 < 0 ) return false;
             if (board[cRow - 1][cColumn].cellNotEqual(peg)) return false;
             if (board[cRow - 2][cColumn].cellNotEqual(empty)) return false;
             break;
         case 'D':
-            #ifdef DEBUG
-            cerr << "Check Move 5" << endl;
-            #endif
+
             if (cRow + 2 > (xsize - 1)) return false;
             if (board[cRow + 1][cColumn].cellNotEqual(peg)) return false;
             if (board[cRow + 2][cColumn].cellNotEqual(empty)) return false;
@@ -239,28 +220,18 @@ bool PegSolitaire::checkMove(int cRow, int cColumn, char cDirection){        /*C
 
 void PegSolitaire::print() const {
     /*Function to print boards*/
-    #ifdef DEBUG
-    cerr << "Error display1" << endl;
-    #endif
+
     int xsize = board.size();
-     #ifdef DEBUG
-    cerr << "Error display2" << endl;
-    #endif
     int ysize = board[0].size();
-     #ifdef DEBUG
-    cerr << "Error display3" << endl;
-    #endif
     int control = 1,counter = 0;
-    cout << "\x1b[2J"; 
-    cout << "\033[0;0H";
     string label= "abcdefghijklmnopqr";                             /*Saves letters inside a string*/
+    
     cout << endl;
+    
     for (auto i=0; i < xsize; i++){
         if (counter != 0) cout << counter << " ";                   /*Prints numbers in the map.*/
         counter++;
-        #ifdef DEBUG
-        cerr << "Error display3" << endl;
-        #endif
+
         if (i==0 && control == 1) {
             cout << "  ";
             for(int k=0 ; k< ysize; k++) cout << label[k] << " ";    /*Prints letters in the map.*/
@@ -276,11 +247,7 @@ void PegSolitaire::print() const {
                 cout << " ";
             }
         }
-        cout << endl;
-        #ifdef DEBUG
-        cerr << "Error display4" << endl;
-        #endif
-        
+        cout << endl;  
     }
 }
 
@@ -320,5 +287,14 @@ int PegSolitaire::boardScore() const{
 vector<vector<PegSolitaire::Cell>> PegSolitaire::getBoard() const{
     return board;
 }
+
+void PegSolitaire::printMovementRules() const{
+	cout << "\nPlease enter your move" << endl;         /*Takes a string from user*/
+    cout << "---Correct input type: B4-R---\n";
+    cout << "---Upper letters only---\n";
+    cout << "---This moves the peg at B4 towards right to eliminate the peg at C4---\n";
+    cout << "---Use L for left, R for right, U for up, and D for down.---\n"; 
+	}
+
 
 }
