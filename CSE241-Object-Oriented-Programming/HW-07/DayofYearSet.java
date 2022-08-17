@@ -25,7 +25,7 @@ public class DayofYearSet {
 			return month;
 		}
 		
-		//private members
+			//private members
 		private int day;
 		private int month;
 	}
