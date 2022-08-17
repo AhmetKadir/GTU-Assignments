@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes","u":"allclasses-index.html"},{"p":"<Unnamed>","l":"DayofYearSet.DayofYear"},{"p":"<Unnamed>","l":"DayofYearSet"}];updateSearchResults();
