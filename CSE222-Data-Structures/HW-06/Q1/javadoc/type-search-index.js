@@ -1,1 +1,0 @@
-typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"srcAka","l":"BinaryTree"},{"p":"srcAka","l":"BSTBuilder"},{"p":"interfaceAka","l":"ISearchTree"},{"p":"srcAka","l":"BinaryTree.Node"}];updateSearchResults();

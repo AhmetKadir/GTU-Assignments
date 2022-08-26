@@ -2,11 +2,11 @@ JC = javac
 R = java
 SUPER = interfaceAka/
 SUB = srcAka/
-DRIVER = test
+DRIVER = Driver
 JFlags = 
 
 
-m:
+run:
 	$(JC) $(JFlags) $(SUPER)*.java $(SUB)*.java $(DRIVER).java  -d classfiles
 	$(R) -cp classfiles $(DRIVER)
 
