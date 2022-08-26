@@ -1,0 +1,101 @@
+@startuml diagramBuilding
+
+!define DARKBLUE
+!includeurl https://raw.githubusercontent.com/Drakemor/RedDress-PlantUML/master/style.puml
+
+class Building {
+- int length
+- int height 
+- int startingPoint
+- int endingPoint
++ getters
++ setters
++ boolean equals(Object o)
++ String toString()
++ Building()
++ Building(int len, int hei, int start)
+}
+
+class Market {
+	
+	- String owner;
+	- int openingTime;
+	- int closingTime;
+	+ Market()
+	+ Market(int len, int hei, int startingPoint, String ownedBy, int openT, int closeT)
+	+ int focus()
+	+ String toString()
+	+ boolean equals(Object o)
+}
+
+class House {
+	- int rooms;
+	- String color;
+	- String owner;
+	+ House()
+	+ House(int len, int hei, int startingPoint, int roomsInput, String colorInput, String ownedBy)
+	+ String focus()
+	+ String toString()
+	+ boolean equals(Object o)
+}
+
+class Office{
+	- String jobType;
+	- String owner;
+	+ Office()
+	+ Office(int len, int hei, int startingPoint, String job, String ownedBy)
+	+ String focus()
+	+ String toString()
+	+ boolean equals(Object o)
+}
+
+class Playground{
+
+	+ Playground()
+	+ Playground(int l, int startingPoint)
+	+ String toString()
+	+ boolean equals(Object o)
+	+ int focus()
+}
+
+class Street{
+	
+	- int sizeFront
+	- int sizeBack
+	- int capacityFront
+	- int capacityBack
+	- Building[] front
+	- Building[] back
+	- int length
+	+ Street()
+	+ Street(int l)
+	+ void add(Building bui, String side)
+	+ void delete(Building bui)
+	+ void delete(int startingPoint, String side)
+	- boolean isSuitable(int start, int buildLength, String side)
+	+ void listBuildings()
+	+ int numberOfPlaygrounds()
+	+ double playgroundRatio()
+	+ int totalRemainingLandsLengthAtFront()
+	+ int totalRemainingLandsLengthAtBack()
+	+ int totalLengthHouse()
+	+ int totalLengthMarket()
+	+ int totalLengthOffice()
+	+ void displaySkylineSilhouette()
+	- int maxHeight()
+	+ void menu()
+	- void editingMode()
+	- void viewingMode()
+	- void userAdd()
+	- void userDelete()
+	+ String toString()
+	+ boolean equals(Object o)
+}
+
+
+Building<|--Market : extends
+Building<|--House : extends
+Building<|--Office : extends
+Building<|--Playground : extends
+
+@enduml

@@ -1,0 +1,32 @@
+@startuml
+annotation java.lang.Override
+annotation java.lang.SuppressWarnings
+class java.util.Scanner
+class java.util.Stack
+class src_Aka.BinarySearchTree
+class src_Aka.BinaryTree
+class src_Aka.HashTableChain
+class src_Aka.HashTableComb
+class test
+interface interface_Aka.IKWHashMap
+interface interface_Aka.ISearchTree
+interface java.lang.Iterable
+interface src_Aka.Serializable
+src_Aka.BinarySearchTree ..> java.lang.Override
+src_Aka.BinarySearchTree ..> java.lang.SuppressWarnings
+src_Aka.BinarySearchTree ..> java.util.Stack
+src_Aka.BinarySearchTree --|> src_Aka.BinaryTree
+src_Aka.BinarySearchTree --|> interface_Aka.ISearchTree
+src_Aka.BinarySearchTree --|> java.lang.Iterable
+src_Aka.BinaryTree ..> java.lang.SuppressWarnings
+src_Aka.BinaryTree ..> java.util.Scanner
+src_Aka.BinaryTree --|> src_Aka.Serializable
+src_Aka.HashTableChain ..> java.lang.Override
+src_Aka.HashTableChain ..> java.lang.SuppressWarnings
+src_Aka.HashTableChain --|> interface_Aka.IKWHashMap
+src_Aka.HashTableComb ..> java.lang.Override
+src_Aka.HashTableComb ..> java.lang.SuppressWarnings
+src_Aka.HashTableComb --|> interface_Aka.IKWHashMap
+test ..> src_Aka.HashTableChain
+test ..> src_Aka.HashTableComb
+@enduml

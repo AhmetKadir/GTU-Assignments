@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"srcAka","l":"BoostedDijkstra"},{"p":"srcAka","l":"Dijkstra"},{"p":"interfaceAka","l":"DynamicGraph"},{"p":"srcAka","l":"Edge"},{"p":"interfaceAka","l":"Graph"},{"p":"srcAka","l":"MyGraph"},{"p":"srcAka","l":"MyGraph.Vertex"}];updateSearchResults();
