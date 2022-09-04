@@ -1,0 +1,11 @@
+### TOPICS
+- Introduction to C programming 
+- Control Structures
+- Functions and Arrays 
+- Pointers and Strings 
+- Input Output 
+- Structures
+- File processing 
+- The preprocessor 
+- Data Structures 
+- Advanced topics
