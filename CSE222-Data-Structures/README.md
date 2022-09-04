@@ -1,14 +1,17 @@
 ### TOPICS
--  Introduction to C++ programming
--  Classes and objects
--  Control Structures
--  Functions
--  Arrays 
--  Pointers and Strings
--  Classes and Data Abstraction
--  Operator Overloading
--  Virtual Functions and Polymorphism
--  Templates
--  Exception Handling
--  Standard Template Library
--  Introduction to Java and comparison with C++
+- Introduction to Algorithm Analysis
+- Sequential Containers
+- Recursion
+- Sorting
+- Maps and Sets
+- Map ADT and Set ADT
+- Hash coding
+- Open addressing
+- Chaining
+- Graphs: Terminology
+- Graph ADT
+- Implementing Graph ADT
+- Traversals of Graphs
+- Topological Sort
+- Problems with Weighted Graphs: Shortest Path Problem
+- Minimum Spanning Tree
