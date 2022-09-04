@@ -1,0 +1,14 @@
+### TOPICS
+-  Introduction to C++ programming
+-  Classes and objects
+-  Control Structures
+-  Functions
+-  Arrays 
+-  Pointers and Strings
+-  Classes and Data Abstraction
+-  Operator Overloading
+-  Virtual Functions and Polymorphism
+-  Templates
+-  Exception Handling
+-  Standard Template Library
+-  Introduction to Java and comparison with C++
